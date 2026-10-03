@@ -1,0 +1,27 @@
+name: Build Mushafi APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download project
+        uses: actions/checkout@v4
+
+      - name: Build APK
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          workdir: .
+          buildozer_version: stable
+
+      - name: Save APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: mushafi-apk
+          path: bin/*.apk
